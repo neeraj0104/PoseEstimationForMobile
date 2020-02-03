@@ -34,10 +34,10 @@ input_node = tf.placeholder(tf.float32, shape=[1, args.size, args.size, 3], name
 
 with tf.Session() as sess:
     net = get_network(args.model, input_node, trainable=False)
-    saver = tf.train.Saver()
+    saver = tf.compat.v1.train.Saver()
     saver.restore(sess, args.checkpoint)
 
-    input_graph_def = tf.get_default_graph().as_graph_def()
+    input_graph_def = tf.compat.v1.get_default_graph().as_graph_def()
     output_graph_def = tf.graph_util.convert_variables_to_constants(
         sess,  # The session
         input_graph_def,  # input_graph_def is useful for retrieving the nodes
