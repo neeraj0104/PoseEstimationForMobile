@@ -7,7 +7,9 @@
 import argparse
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = ''
+#os.environ['CUDA_VISIBLE_DEVICES'] = ''
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 parser = argparse.ArgumentParser(description="Tools for convert frozen_pb into tflite or coreml.")
 parser.add_argument("--frozen_pb", type=str, default="./hourglass/model-360000.pb", help="Path for storing checkpoint.")
 parser.add_argument("--input_node_name", type=str, default="image", help="Name of input node name.")
@@ -24,11 +26,14 @@ output_filename = output_filename.split(".")[0]
 if "tflite" in args.type:
     import tensorflow as tf
     output_filename += ".tflite"
-    converter = tf.contrib.lite.TocoConverter.from_frozen_graph(
+    converter = tf.compat.v1.lite.TocoConverter.from_frozen_graph(
         args.frozen_pb,
         [args.input_node_name],
         [args.output_node_name]
     )
+    print("File name is {0}".format(args.frozen_pb))
+#    converter = tf.lite.TFLiteConverter.from_saved_model(args.frozen_pb)
+
     tflite_model = converter.convert()
     open(os.path.join(args.output_path, output_filename), "wb").write(tflite_model)
     print("Generate tflite success.")
