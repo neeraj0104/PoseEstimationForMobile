@@ -31,7 +31,7 @@ def build_network(input, trainable):
 
     net = convb(input, 3, 3, out_channel_ratio(32), 2, name="Conv2d_0")
 
-    with tf.variable_scope('MobilenetV2'):
+    with tf.compat.v1.variable_scope('MobilenetV2'):
 
         # 128, 112
         mv2_branch_0 = slim.stack(net, inverted_bottleneck,
