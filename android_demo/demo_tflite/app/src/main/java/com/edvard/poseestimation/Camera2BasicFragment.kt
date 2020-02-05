@@ -336,10 +336,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val characteristics = manager.getCameraCharacteristics(cameraId)
 
         // We don't use a front facing camera in this sample.
-        val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-        if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
-          continue
-        }
+        //val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
+        //if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
+        //  continue
+        //}
 
         val map =
           characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: continue
@@ -354,20 +354,20 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
         // Find out if we need to swap dimension to get the preview size relative to sensor
         // coordinate.
-        val displayRotation = activity.windowManager.defaultDisplay.rotation
+        //val displayRotation = activity.windowManager.defaultDisplay.rotation
 
         /* Orientation of the camera sensor */
-        val sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
-        var swappedDimensions = false
-        when (displayRotation) {
-          Surface.ROTATION_0, Surface.ROTATION_180 -> if (sensorOrientation == 90 || sensorOrientation == 270) {
-            swappedDimensions = true
-          }
-          Surface.ROTATION_90, Surface.ROTATION_270 -> if (sensorOrientation == 0 || sensorOrientation == 180) {
-            swappedDimensions = true
-          }
-          else -> Log.e(TAG, "Display rotation is invalid: $displayRotation")
-        }
+        //val sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
+        //var swappedDimensions = false
+        //when (displayRotation) {
+        //  Surface.ROTATION_0, Surface.ROTATION_180 -> if (sensorOrientation == 90 || sensorOrientation == 270) {
+        //    swappedDimensions = true
+        //  }
+        //  Surface.ROTATION_90, Surface.ROTATION_270 -> if (sensorOrientation == 0 || sensorOrientation == 180) {
+        //    swappedDimensions = true
+        //  }
+        //  else -> Log.e(TAG, "Display rotation is invalid: $displayRotation")
+        //}
 
         val displaySize = Point()
         activity.windowManager.defaultDisplay.getSize(displaySize)
@@ -376,12 +376,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         var maxPreviewWidth = displaySize.x
         var maxPreviewHeight = displaySize.y
 
-        if (swappedDimensions) {
-          rotatedPreviewWidth = height
-          rotatedPreviewHeight = width
-          maxPreviewWidth = displaySize.y
-          maxPreviewHeight = displaySize.x
-        }
+        //if (swappedDimensions) {
+        //  rotatedPreviewWidth = height
+        //  rotatedPreviewHeight = width
+        //  maxPreviewWidth = displaySize.y
+        //  maxPreviewHeight = displaySize.x
+        //}
 
         if (maxPreviewWidth > MAX_PREVIEW_WIDTH) {
           maxPreviewWidth = MAX_PREVIEW_WIDTH

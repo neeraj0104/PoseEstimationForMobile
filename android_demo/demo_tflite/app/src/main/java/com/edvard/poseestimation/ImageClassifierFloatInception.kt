@@ -85,6 +85,20 @@ class ImageClassifierFloatInception private constructor(
 
     val tempArray = FloatArray(outputW * outputH)
     val outTempArray = FloatArray(outputW * outputH)
+
+    var rwrs_x: Float = 0.0f
+    var rwrs_y: Float = 0.0f
+    var lwrs_x: Float = 0.0f
+    var lwrs_y: Float = 0.0f
+    var relb_x: Float = 0.0f
+    var relb_y: Float = 0.0f
+    var lelb_x: Float = 0.0f
+    var lelb_y: Float = 0.0f
+    var rshl_x: Float = 0.0f
+    var rshl_y: Float = 0.0f
+    var lshl_x: Float = 0.0f
+    var lshl_y: Float = 0.0f
+
     for (i in 0..13) {
       var index = 0
       for (x in 0 until outputW) {
@@ -122,6 +136,64 @@ class ImageClassifierFloatInception private constructor(
       mPrintPointArray!![0][i] = maxX
       mPrintPointArray!![1][i] = maxY
 //      Log.i("TestOutPut", "pic[$i] ($maxX,$maxY) $max")
+
+
+      when (i) {
+        0 -> Log.i("Inference", " HEAD ($maxX, $maxY)")
+
+        1 -> {
+         Log.i("Inference", " NECK ($maxX, $maxY)")
+//          neck_x = maxX
+//          neck_y = maxY
+        }
+
+        2 -> {
+          Log.i("Inference", " LSHL ($maxX, $maxY)")
+          lshl_x = maxX
+          lshl_y = maxY
+        }
+        5 -> {
+          Log.i("Inference", " RSHL ($maxX, $maxY)")
+          rshl_x = maxX
+         rshl_y = maxY
+        }
+
+        3 -> {
+          Log.i("Inference", " LELB ($maxX, $maxY)")
+          lelb_x = maxX
+         lelb_y = maxY
+        }
+        6 -> {
+          Log.i("Inference", " RELB ($maxX, $maxY)")
+          relb_x = maxX
+         relb_y = maxY
+        }
+
+        4 -> {
+          Log.i("Inference", " LWRS ($maxX, $maxY)")
+         lwrs_x = maxX
+          lwrs_y = maxY
+        }
+        7 -> {
+         Log.i("Inference", " RWRS ($maxX, $maxY)")
+          rwrs_x = maxX
+          rwrs_y = maxY
+        }
+
+        8 -> Log.i("Inference", " LHIP ($maxX, $maxY)")
+       11 -> Log.i("Inference", " RHIP ($maxX, $maxY)")
+
+        9 -> Log.i("Inference", " LKNE ($maxX, $maxY)")
+        12 -> Log.i("Inference", " RKNE ($maxX, $maxY)")
+
+        10 -> Log.i("Inference", " LANK ($maxX, $maxY)")
+       13 -> Log.i("Inference", " RANK ($maxX, $maxY)")
+      }
+    }
+    // right hand up
+    if (rwrs_y > relb_y && relb_y > rshl_y) {
+      Log.e("shivam", "hands up")
+
     }
   }
 
